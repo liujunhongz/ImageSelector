@@ -20,9 +20,11 @@ package com.kanade.imageselector_core;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -169,7 +171,7 @@ public abstract class AbsBoxingViewFragment extends Fragment implements PickerCo
 
     private void initCameraPhotoPicker(Bundle savedInstanceState) {
         BoxingConfig config = BoxingManager.getInstance().getBoxingConfig();
-        if (config == null || config.isVideoMode() || !config.isNeedCamera()) {
+        if (config == null || !config.isNeedCamera()) {
             return;
         }
         mCameraPicker = new CameraPickerHelper(savedInstanceState);
@@ -446,32 +448,66 @@ public abstract class AbsBoxingViewFragment extends Fragment implements PickerCo
                 return;
             }
 
+            ContentValues values = new ContentValues();
+            String filePath = helper.getSourceFilePath();
             if (BoxingManager.getInstance().getBoxingConfig().isVideoMode()) {
-                Uri uri = helper.getmSourceFileUri();
-                Cursor cursor = fragment
+                File file = new File(filePath);
+                MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+                retriever.setDataSource(filePath);
+                double durDouble = Double.parseDouble(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+                int durInt = (int) Math.ceil(durDouble / 1000);
+
+                String size = String.valueOf(file.length());
+                String date = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DATE);
+                String dur = String.valueOf(durInt);
+                String title = file.getName();
+                String type = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_MIMETYPE);
+
+                values.put(MediaStore.Video.Media.DATA, filePath);
+                values.put(MediaStore.Video.Media.TITLE, title);
+                values.put(MediaStore.Video.Media.MIME_TYPE, type);
+                values.put(MediaStore.Video.Media.SIZE, size);
+                values.put(MediaStore.Video.Media.DATE_TAKEN, date);
+                values.put(MediaStore.Video.Media.DURATION, dur);
+                fragment
                         .getContext()
                         .getContentResolver()
-                        .query(uri, null, null, null, null, null);
-                if (cursor != null && cursor.moveToFirst()) {
-                    String video_data = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
-                    String video_id = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media._ID));
-                    String video_title = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.TITLE));
-                    String video_type = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.MIME_TYPE));
-                    String video_size = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.SIZE));
-                    String video_date = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATE_TAKEN));
-                    String video_duration = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DURATION));
-                    VideoMedia media = new VideoMedia.Builder(video_id, video_data).setTitle(video_title).setDuration(video_duration)
-                            .setSize(video_size).setDataTaken(video_date).setMimeType(video_type).build();
-                    cursor.close();
-                    fragment.onCameraFinish(media);
-                }
+                        .insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values);
+
+                VideoMedia media = new VideoMedia.Builder("", filePath)
+                        .setTitle(title)
+                        .setDuration(dur)
+                        .setSize(size)
+                        .setDateTaken(date)
+                        .setMimeType(type)
+                        .build();
+                fragment.onCameraFinish(media);
             } else {
-                File file = new File(helper.getSourceFilePath());
+                File file = new File(filePath);
 
                 if (!file.exists()) {
                     onError(helper);
                     return;
                 }
+
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = true;
+                BitmapFactory.decodeFile(filePath, options);
+                String height = String.valueOf(options.outHeight);
+                String width = String.valueOf(options.outWidth);
+                String type = options.outMimeType;
+
+                values.put(MediaStore.Images.Media.DATA, filePath);
+                values.put(MediaStore.Video.Media.TITLE, file.getName());
+                values.put(MediaStore.Video.Media.MIME_TYPE, type);
+                values.put(MediaStore.Video.Media.SIZE, file.length());
+                values.put(MediaStore.Video.Media.WIDTH, width);
+                values.put(MediaStore.Video.Media.HEIGHT, height);
+                fragment
+                        .getContext()
+                        .getContentResolver()
+                        .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
                 ImageMedia cameraMedia = new ImageMedia(file);
                 cameraMedia.saveMediaStore(fragment.getAppCr());
                 fragment.onCameraFinish(cameraMedia);
@@ -486,6 +522,5 @@ public abstract class AbsBoxingViewFragment extends Fragment implements PickerCo
             }
             fragment.onCameraError();
         }
-
     }
 }

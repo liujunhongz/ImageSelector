@@ -19,6 +19,7 @@ package com.kanade.imageselector_core.model.config;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 /**
  * The pick config.<br/>
@@ -52,6 +53,9 @@ public class BoxingConfig implements Parcelable {
     }
 
     public String getFilePath() {
+        if (TextUtils.isEmpty(filePath)) {
+            return "";
+        }
         return filePath;
     }
 

@@ -32,13 +32,11 @@ import java.util.concurrent.ExecutionException;
  * @author ChenSL
  */
 public class BoxingFileHelper {
-    public static final String DEFAULT_SUB_DIR = "/bili/boxing";
-
     public static boolean createFile(String path) throws ExecutionException, InterruptedException {
         if (TextUtils.isEmpty(path)) {
             return false;
         }
-        final File file = new File(path);
+        File file = new File(path);
         return file.exists() || file.mkdirs();
 
     }
@@ -58,13 +56,13 @@ public class BoxingFileHelper {
 
     @Nullable
     public static String getExternalDCIM(String subDir) {
-        String result = null;
+        String result;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
             if (file == null) {
-                return result;
+                return null;
             }
-            String dir = "/bili/boxing";
+            String dir = "";
             if (!TextUtils.isEmpty(subDir)) {
                 dir = subDir;
             }
@@ -73,7 +71,28 @@ public class BoxingFileHelper {
             return result;
         }
         BoxingLog.d("external DCIM do not exist.");
-        return result;
+        return null;
     }
 
+    public static String getExternalCamera(String subDir) {
+        String result;
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + File.separator + "Camera");
+            if (!file.exists()) {
+                if (!file.mkdirs()) {
+                    return null;
+                }
+            }
+
+            String dir = "";
+            if (!TextUtils.isEmpty(subDir)) {
+                dir = subDir;
+            }
+            result = file.getAbsolutePath() + dir;
+            BoxingLog.d("external Camera is: " + result);
+            return result;
+        }
+        BoxingLog.d("external Camera do not exist.");
+        return null;
+    }
 }

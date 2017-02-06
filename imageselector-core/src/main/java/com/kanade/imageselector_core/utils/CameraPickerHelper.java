@@ -133,14 +133,15 @@ public class CameraPickerHelper {
      * @param subFolderPath a folder in external DCIM, must start with "/".
      */
     public void startVideo(Activity activity, Fragment fragment, String subFolderPath) {
-        String cameraOutDir = BoxingFileHelper.getExternalDCIM(subFolderPath);
+        String cameraOutDir = BoxingFileHelper.getExternalCamera(subFolderPath);
         try {
             if (BoxingFileHelper.createFile(cameraOutDir)) {
                 mOutputFile = new File(cameraOutDir, String.valueOf(System.currentTimeMillis()) + ".mp4");
                 mSourceFilePath = mOutputFile.getPath();
                 mSourceFileUri = getFileUri(activity.getApplicationContext(), mOutputFile);
+
                 Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-                intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0.7);
+                intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
                 intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 8000);
                 intent.putExtra(MediaStore.EXTRA_SIZE_LIMIT, FILE_MAX_SIZE);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, mSourceFileUri);
@@ -202,7 +203,6 @@ public class CameraPickerHelper {
                 } catch (ActivityNotFoundException ignore) {
                     callbackError();
                 }
-
             }
         } catch (ExecutionException | InterruptedException e) {
             BoxingLog.d("create file" + cameraOutDir + " error.");
