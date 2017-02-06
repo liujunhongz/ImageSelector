@@ -454,12 +454,10 @@ public abstract class AbsBoxingViewFragment extends Fragment implements PickerCo
                 File file = new File(filePath);
                 MediaMetadataRetriever retriever = new MediaMetadataRetriever();
                 retriever.setDataSource(filePath);
-                double durDouble = Double.parseDouble(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
-                int durInt = (int) Math.ceil(durDouble / 1000);
 
                 String size = String.valueOf(file.length());
                 String date = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DATE);
-                String dur = String.valueOf(durInt);
+                String dur = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
                 String title = file.getName();
                 String type = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_MIMETYPE);
 
