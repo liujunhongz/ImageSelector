@@ -141,7 +141,7 @@ public class CameraPickerHelper {
                 mSourceFileUri = getFileUri(activity.getApplicationContext(), mOutputFile);
 
                 Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-                intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+                intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0.9);
                 intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 8000);
                 intent.putExtra(MediaStore.EXTRA_SIZE_LIMIT, FILE_MAX_SIZE);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, mSourceFileUri);
