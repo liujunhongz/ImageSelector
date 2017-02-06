@@ -221,7 +221,7 @@ public class BoxingBottomSheetFragment extends AbsBoxingViewFragment implements 
         public void onClick(View v) {
             if (!mIsCamera) {
                 mIsCamera = true;
-                startCamera(getActivity(), BoxingBottomSheetFragment.this, BoxingFileHelper.DEFAULT_SUB_DIR);
+                startCamera(getActivity(), BoxingBottomSheetFragment.this, BoxingManager.getInstance().getBoxingConfig().getFilePath());
             }
         }
     }

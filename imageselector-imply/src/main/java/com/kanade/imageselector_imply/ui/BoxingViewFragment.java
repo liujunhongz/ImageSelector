@@ -62,7 +62,6 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
     public static final String TAG = "com.bilibili.impl.ui.BoxingViewFragment";
     private static final int IMAGE_PREVIEW_REQUEST_CODE = 9086;
     private static final int IMAGE_CROP_REQUEST_CODE = 9087;
-    private static final int REC_REQUEST_CODE = 568;
 
     private static final int GRID_COUNT = 3;
     private static final int MAX_SELECTED_COUNT = 9;
@@ -415,7 +414,7 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
         public void onClick(View v) {
             if (!mIsCamera) {
                 mIsCamera = true;
-                startCamera(getActivity(), BoxingViewFragment.this, BoxingFileHelper.DEFAULT_SUB_DIR);
+                startCamera(getActivity(), BoxingViewFragment.this, BoxingManager.getInstance().getBoxingConfig().getFilePath());
             }
         }
     }
