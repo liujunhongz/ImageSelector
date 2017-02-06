@@ -16,16 +16,9 @@
   ~
   -->
 
-<resources>
-    <string name="app_name">ImageSelector</string>
-    <string name="first_demo">1.使用自定义Activity</string>
-    <string name="first_demo_title">自定义Activity</string>
-    <string name="second_demo">2.使用自定义Fragment</string>
-    <string name="second_demo_title">自定义Fragment</string>
-    <string name="bottom_sheet">Bottom Sheet</string>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_fresco" android:title="@string/menu_fresco" />
+    <item android:id="@+id/menu_glide" android:title="@string/menu_glide" />
+    <item android:id="@+id/menu_picasso" android:title="@string/menu_picasso" />
 
-    <string name="menu_fresco">Fresco</string>
-    <string name="menu_glide">Glide</string>
-    <string name="menu_picasso">Picasso</string>
-
-</resources>
+</menu>

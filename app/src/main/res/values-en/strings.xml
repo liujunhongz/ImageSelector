@@ -18,14 +18,9 @@
 
 <resources>
     <string name="app_name">ImageSelector</string>
-    <string name="first_demo">1.使用自定义Activity</string>
-    <string name="first_demo_title">自定义Activity</string>
-    <string name="second_demo">2.使用自定义Fragment</string>
-    <string name="second_demo_title">自定义Fragment</string>
+    <string name="first_demo">1.use Custom Activity</string>
+    <string name="second_demo">2.use Custom Fragment</string>
+    <string name="second_demo_title">Custom Fragment</string>
+    <string name="first_demo_title">Custom Activity</string>
     <string name="bottom_sheet">Bottom Sheet</string>
-
-    <string name="menu_fresco">Fresco</string>
-    <string name="menu_glide">Glide</string>
-    <string name="menu_picasso">Picasso</string>
-
 </resources>
