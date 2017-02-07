@@ -17,8 +17,8 @@
   -->
 
 <paths>
-    <cache-path name="internal" path="boxing" />
+    <cache-path name="internal" path="Camera" />
 
-    <external-path name="external" path="DCIM/bili/boxing" />
+    <external-path name="external" path="DCIM/Camera" />
 
 </paths>

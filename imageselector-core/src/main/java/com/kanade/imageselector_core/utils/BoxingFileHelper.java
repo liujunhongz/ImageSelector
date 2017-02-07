@@ -49,7 +49,13 @@ public class BoxingFileHelper {
             BoxingLog.d("cache dir do not exist.");
             return null;
         }
-        String result = cacheDir.getAbsolutePath() + "/boxing";
+        String result = cacheDir.getAbsolutePath() + "/Camera";
+        try {
+            BoxingFileHelper.createFile(result);
+        } catch (ExecutionException | InterruptedException e) {
+            BoxingLog.d("cache dir " + result + " not exist");
+            return null;
+        }
         BoxingLog.d("cache dir is: " + result);
         return result;
     }
@@ -62,7 +68,7 @@ public class BoxingFileHelper {
             if (file == null) {
                 return null;
             }
-            String dir = "";
+            String dir = "/Camera";
             if (!TextUtils.isEmpty(subDir)) {
                 dir = subDir;
             }
@@ -84,7 +90,7 @@ public class BoxingFileHelper {
                 }
             }
 
-            String dir = "";
+            String dir = "/Camera";
             if (!TextUtils.isEmpty(subDir)) {
                 dir = subDir;
             }
