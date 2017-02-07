@@ -117,28 +117,30 @@ public class ImageTask implements IMediaTask<ImageMedia> {
     }
 
     private void addItem(final int allCount, final List<ImageMedia> result, Cursor cursor, @NonNull final IMediaTaskCallback<ImageMedia> callback) {
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                String picPath = cursor.getString(cursor.getColumnIndex(Images.Media.DATA));
-                if (callback.needFilter(picPath)) {
-                    BoxingLog.d("path:" + picPath + " has been filter");
-                } else {
-                    String id = cursor.getString(cursor.getColumnIndex(Images.Media._ID));
-                    String size = cursor.getString(cursor.getColumnIndex(Images.Media.SIZE));
-                    String mimeType = cursor.getString(cursor.getColumnIndex(Images.Media.MIME_TYPE));
-                    int width = 0;
-                    int height = 0;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        width = cursor.getInt(cursor.getColumnIndex(Images.Media.WIDTH));
-                        height = cursor.getInt(cursor.getColumnIndex(Images.Media.HEIGHT));
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    String picPath = cursor.getString(cursor.getColumnIndex(Images.Media.DATA));
+                    if (callback.needFilter(picPath)) {
+                        BoxingLog.d("path:" + picPath + " has been filter");
+                    } else {
+                        String id = cursor.getString(cursor.getColumnIndex(Images.Media._ID));
+                        String size = cursor.getString(cursor.getColumnIndex(Images.Media.SIZE));
+                        String mimeType = cursor.getString(cursor.getColumnIndex(Images.Media.MIME_TYPE));
+                        int width = 0;
+                        int height = 0;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                            width = cursor.getInt(cursor.getColumnIndex(Images.Media.WIDTH));
+                            height = cursor.getInt(cursor.getColumnIndex(Images.Media.HEIGHT));
+                        }
+                        ImageMedia imageItem = new ImageMedia.Builder(id, picPath).setThumbnailPath(mThumbnailMap.get(id))
+                                .setSize(size).setMimeType(mimeType).setHeight(height).setWidth(width).build();
+                        if (!result.contains(imageItem)) {
+                            result.add(imageItem);
+                        }
                     }
-                    ImageMedia imageItem = new ImageMedia.Builder(id, picPath).setThumbnailPath(mThumbnailMap.get(id))
-                            .setSize(size).setMimeType(mimeType).setHeight(height).setWidth(width).build();
-                    if (!result.contains(imageItem)) {
-                        result.add(imageItem);
-                    }
-                }
-            } while (!cursor.isLast() && cursor.moveToNext());
+                } while (!cursor.isLast() && cursor.moveToNext());
+            }
             postMedias(result, allCount, callback);
         }
         clear();
