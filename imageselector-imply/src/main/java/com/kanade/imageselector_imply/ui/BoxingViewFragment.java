@@ -41,7 +41,6 @@ import com.kanade.imageselector_core.model.config.BoxingConfig;
 import com.kanade.imageselector_core.model.entity.AlbumEntity;
 import com.kanade.imageselector_core.model.entity.BaseMedia;
 import com.kanade.imageselector_core.model.entity.impl.ImageMedia;
-import com.kanade.imageselector_core.utils.BoxingFileHelper;
 import com.kanade.imageselector_imply.R;
 import com.kanade.imageselector_imply.adapter.BoxingAlbumAdapter;
 import com.kanade.imageselector_imply.adapter.BoxingMediaAdapter;
@@ -94,7 +93,9 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
     @Override
     public void startLoading() {
         loadMedias();
-        loadAlbum();
+        if (!BoxingManager.getInstance().getBoxingConfig().isVideoMode()) {
+            loadAlbum();
+        }
     }
 
     @Override
