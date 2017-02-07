@@ -50,7 +50,7 @@ import java.util.List;
  * @author ChenSL
  */
 public class BoxingViewActivity extends AbsBoxingViewActivity {
-    public static final String EXTRA_TYPE_BACK = "com.bilibili.impl.ui.BoxingViewActivity.type_back";
+    public static final String EXTRA_TYPE_BACK = "com.kanade.imageselector.imply.ui.BoxingViewActivity.type_back";
 
     private static final int MAX_NUMBER = 9;
 
@@ -88,7 +88,7 @@ public class BoxingViewActivity extends AbsBoxingViewActivity {
     private void createToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.nav_top_bar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mToolbar.setNavigationIcon(R.drawable.ic_back);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

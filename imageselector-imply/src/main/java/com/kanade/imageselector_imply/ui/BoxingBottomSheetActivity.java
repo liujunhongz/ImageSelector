@@ -78,8 +78,8 @@ public class BoxingBottomSheetActivity extends AbsBoxingActivity implements View
     private void createToolbar() {
         Toolbar bar = (Toolbar) findViewById(R.id.nav_top_bar);
         setSupportActionBar(bar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.default_album);
+        bar.setNavigationIcon(R.drawable.ic_back);
         bar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

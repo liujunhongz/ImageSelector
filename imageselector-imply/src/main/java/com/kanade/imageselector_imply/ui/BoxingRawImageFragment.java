@@ -45,7 +45,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  * @author ChenSL
  */
 public class BoxingRawImageFragment extends Fragment {
-    private static final String BUNDLE_IMAGE = "com.bilibili.impl.ui.BoxingRawImageFragment.image";
+    private static final String BUNDLE_IMAGE = "com.kanade.imageselector.imply.ui.BoxingRawImageFragment.image";
     private static final int MAX_SCALE = 15;
     private PhotoView mImageView;
     private ProgressBar mProgress;

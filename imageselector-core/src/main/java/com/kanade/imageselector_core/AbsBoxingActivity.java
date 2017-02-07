@@ -31,25 +31,25 @@ import com.kanade.imageselector_core.presenter.PickerPresenter;
 import java.util.ArrayList;
 
 /**
- * A abstract class to connect {@link com.kanade.imageselector_core.presenter.PickerContract.View} and {@link com.kanade.imageselector_core.presenter.PickerContract.Presenter}.
+ * A abstract class to connect {@link PickerContract.View} and {@link PickerContract.Presenter}.
  * one job has to be done. override {@link #onCreateBoxingView(ArrayList)} to create a subclass for {@link AbsBoxingViewFragment}.
  *
  * @author ChenSL
  */
-public abstract class AbsBoxingActivity extends AppCompatActivity implements com.kanade.imageselector_core.Boxing.OnBoxingFinishListener {
+public abstract class AbsBoxingActivity extends AppCompatActivity implements Boxing.OnBoxingFinishListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        com.kanade.imageselector_core.AbsBoxingViewFragment view = onCreateBoxingView(getSelectedMedias(getIntent()));
+        AbsBoxingViewFragment view = onCreateBoxingView(getSelectedMedias(getIntent()));
         BoxingConfig pickerConfig = BoxingManager.getInstance().getBoxingConfig();
         view.setPresenter(new PickerPresenter(view));
         view.setPickerConfig(pickerConfig);
-        com.kanade.imageselector_core.Boxing.get().setupFragment(view, this);
+        Boxing.get().setupFragment(view, this);
     }
 
     private ArrayList<BaseMedia> getSelectedMedias(Intent intent) {
-        return intent.getParcelableArrayListExtra(com.kanade.imageselector_core.Boxing.EXTRA_SELECTED_MEDIA);
+        return intent.getParcelableArrayListExtra(Boxing.EXTRA_SELECTED_MEDIA);
     }
 
     public BoxingConfig getBoxingConfig() {
@@ -61,6 +61,6 @@ public abstract class AbsBoxingActivity extends AppCompatActivity implements com
      * {@link PickerContract.Presenter},call in {@link #onCreate(Bundle)}
      */
     @NonNull
-    public abstract com.kanade.imageselector_core.AbsBoxingViewFragment onCreateBoxingView(ArrayList<BaseMedia> medias);
+    public abstract AbsBoxingViewFragment onCreateBoxingView(ArrayList<BaseMedia> medias);
 
 }

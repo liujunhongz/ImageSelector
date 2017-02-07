@@ -64,8 +64,8 @@ public class BoxingActivity extends AbsBoxingActivity {
     private void createToolbar() {
         Toolbar bar = (Toolbar) findViewById(R.id.nav_top_bar);
         setSupportActionBar(bar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        bar.setNavigationIcon(R.drawable.ic_back);
         bar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

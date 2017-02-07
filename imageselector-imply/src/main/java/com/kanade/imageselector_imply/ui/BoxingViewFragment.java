@@ -59,7 +59,7 @@ import java.util.List;
  * @author ChenSL
  */
 public class BoxingViewFragment extends AbsBoxingViewFragment implements View.OnClickListener {
-    public static final String TAG = "com.bilibili.impl.ui.BoxingViewFragment";
+    public static final String TAG = "com.kanade.imageselector.imply.ui.BoxingViewFragment";
     private static final int IMAGE_PREVIEW_REQUEST_CODE = 9086;
     private static final int IMAGE_CROP_REQUEST_CODE = 9087;
 

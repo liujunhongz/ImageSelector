@@ -36,7 +36,8 @@
             android:layout_centerInParent="true"
             android:drawablePadding="8dp"
             android:drawableRight="@drawable/abc_spinner_mtrl_am_alpha"
-            android:gravity="center_vertical"
+            android:gravity="center"
+            android:textSize="16sp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:text="@string/default_album"/>

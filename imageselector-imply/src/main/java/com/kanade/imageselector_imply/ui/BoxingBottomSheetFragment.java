@@ -52,7 +52,7 @@ import java.util.List;
  * @author ChenSL
  */
 public class BoxingBottomSheetFragment extends AbsBoxingViewFragment implements View.OnClickListener {
-    public static final String TAG = "com.bilibili.impl.ui.BoxingBottomSheetFragment";
+    public static final String TAG = "BoxingBottomSheetFragment";
 
     private static final int GRID_COUNT = 3;
 
