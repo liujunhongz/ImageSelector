@@ -93,9 +93,7 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
     @Override
     public void startLoading() {
         loadMedias();
-        if (!BoxingManager.getInstance().getBoxingConfig().isVideoMode()) {
-            loadAlbum();
-        }
+        loadAlbum();
     }
 
     @Override
@@ -192,7 +190,7 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
 
     @Override
     public void showAlbum(@Nullable List<AlbumEntity> albums) {
-        if (albums == null || albums.isEmpty()) {
+        if (albums == null || albums.isEmpty() && mTitleTxt != null) {
             mTitleTxt.setCompoundDrawables(null, null, null, null);
             mTitleTxt.setOnClickListener(null);
             return;
