@@ -23,7 +23,6 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
@@ -429,7 +428,7 @@ public abstract class AbsBoxingViewFragment extends Fragment implements PickerCo
                 requestPermissions(CAMERA_PERMISSIONS, REQUEST_CODE_PERMISSION);
             } else {
                 if (BoxingManager.getInstance().getBoxingConfig().isVideoMode()) {
-                    mCameraPicker.startVideo(activity, fragment, subFolderPath);
+                    mCameraPicker.startRecord(activity, fragment, subFolderPath);
                 } else {
                     mCameraPicker.startCamera(activity, fragment, subFolderPath);
                 }
@@ -453,7 +452,6 @@ public abstract class AbsBoxingViewFragment extends Fragment implements PickerCo
                 return;
             }
 
-            ContentValues values = new ContentValues();
             String filePath = helper.getSourceFilePath();
             if (BoxingManager.getInstance().getBoxingConfig().isVideoMode()) {
                 File file = new File(filePath);
@@ -466,6 +464,7 @@ public abstract class AbsBoxingViewFragment extends Fragment implements PickerCo
                 String title = file.getName();
                 String type = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_MIMETYPE);
 
+                ContentValues values = new ContentValues();
                 values.put(MediaStore.Video.Media.DATA, filePath);
                 values.put(MediaStore.Video.Media.TITLE, title);
                 values.put(MediaStore.Video.Media.MIME_TYPE, type);
@@ -492,24 +491,6 @@ public abstract class AbsBoxingViewFragment extends Fragment implements PickerCo
                     onError(helper);
                     return;
                 }
-
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inJustDecodeBounds = true;
-                BitmapFactory.decodeFile(filePath, options);
-                String height = String.valueOf(options.outHeight);
-                String width = String.valueOf(options.outWidth);
-                String type = options.outMimeType;
-
-                values.put(MediaStore.Images.Media.DATA, filePath);
-                values.put(MediaStore.Video.Media.TITLE, file.getName());
-                values.put(MediaStore.Video.Media.MIME_TYPE, type);
-                values.put(MediaStore.Video.Media.SIZE, file.length());
-                values.put(MediaStore.Video.Media.WIDTH, width);
-                values.put(MediaStore.Video.Media.HEIGHT, height);
-                fragment
-                        .getContext()
-                        .getContentResolver()
-                        .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
                 ImageMedia cameraMedia = new ImageMedia(file);
                 cameraMedia.saveMediaStore(fragment.getAppCr());

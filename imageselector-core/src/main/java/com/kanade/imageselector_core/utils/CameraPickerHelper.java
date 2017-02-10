@@ -58,7 +58,6 @@ public class CameraPickerHelper {
     private static final int FILE_MAX_SIZE = 20971520;    //上传文件最大体积（字节）
 
     private String mSourceFilePath;
-    private Uri mSourceFileUri;
     private File mOutputFile;
     private Callback mCallback;
 
@@ -126,25 +125,25 @@ public class CameraPickerHelper {
     }
 
     /**
-     * start system camera to recording
+     * start system camera to record a video
      *
      * @param activity      not null if fragment is null.
      * @param fragment      not null if activity is null.
      * @param subFolderPath a folder in external DCIM, must start with "/".
      */
-    public void startVideo(Activity activity, Fragment fragment, String subFolderPath) {
-        String cameraOutDir = BoxingFileHelper.getExternalCamera(subFolderPath);
+    public void startRecord(Activity activity, Fragment fragment, String subFolderPath) {
+        String cameraOutDir = BoxingFileHelper.getExternalVideo(subFolderPath);
         try {
             if (BoxingFileHelper.createFile(cameraOutDir)) {
                 mOutputFile = new File(cameraOutDir, String.valueOf(System.currentTimeMillis()) + ".mp4");
                 mSourceFilePath = mOutputFile.getPath();
-                mSourceFileUri = getFileUri(activity.getApplicationContext(), mOutputFile);
+                Uri uri = getFileUri(activity.getApplicationContext(), mOutputFile);
 
                 Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                 intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0.9);
                 intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 8000);
                 intent.putExtra(MediaStore.EXTRA_SIZE_LIMIT, FILE_MAX_SIZE);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, mSourceFileUri);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 try {
                     startActivityForResult(activity, fragment, intent, REQ_CODE_REC);
                 } catch (ActivityNotFoundException ignore) {
@@ -195,9 +194,9 @@ public class CameraPickerHelper {
             if (BoxingFileHelper.createFile(cameraOutDir)) {
                 mOutputFile = new File(cameraOutDir, String.valueOf(System.currentTimeMillis()) + ".jpg");
                 mSourceFilePath = mOutputFile.getPath();
-                mSourceFileUri = getFileUri(activity.getApplicationContext(), mOutputFile);
+                Uri uri = getFileUri(activity.getApplicationContext(), mOutputFile);
                 Intent intent = new Intent(action);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, mSourceFileUri);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 try {
                     startActivityForResult(activity, fragment, intent, requestCode);
                 } catch (ActivityNotFoundException ignore) {
@@ -220,10 +219,6 @@ public class CameraPickerHelper {
 
     public String getSourceFilePath() {
         return mSourceFilePath;
-    }
-
-    public Uri getmSourceFileUri() {
-        return mSourceFileUri;
     }
 
     /**
@@ -253,8 +248,8 @@ public class CameraPickerHelper {
             }
             return true;
         } else if (requestCode == REQ_CODE_REC) {
-            mSourceFileUri = data.getData();
-            if (mSourceFileUri == null) {
+            Uri uri = data.getData();
+            if (uri == null) {
                 return false;
             }
             callbackFinish();

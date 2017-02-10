@@ -165,7 +165,7 @@ public class BoxingMediaAdapter extends RecyclerView.Adapter {
         return mMedias;
     }
 
-    private static class ImageViewHolder extends RecyclerView.ViewHolder {
+    private class ImageViewHolder extends RecyclerView.ViewHolder {
         MediaItemLayout mItemLayout;
         View mItemChecked;
 
@@ -176,7 +176,7 @@ public class BoxingMediaAdapter extends RecyclerView.Adapter {
         }
     }
 
-    private static class CameraViewHolder extends RecyclerView.ViewHolder {
+    private class CameraViewHolder extends RecyclerView.ViewHolder {
         View mCameraLayout;
         ImageView imageView;
 
@@ -185,7 +185,7 @@ public class BoxingMediaAdapter extends RecyclerView.Adapter {
             mCameraLayout = itemView.findViewById(R.id.camera_layout);
             imageView = (ImageView) itemView.findViewById(R.id.camera_txt);
 
-            if (BoxingManager.getInstance().getBoxingConfig().isVideoMode()) {
+            if (mMediaConfig.isVideoMode()) {
                 imageView.setImageResource(R.drawable.ic_video_white);
             }
         }

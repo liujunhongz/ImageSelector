@@ -80,7 +80,7 @@ public class BoxingFileHelper {
         return null;
     }
 
-    public static String getExternalCamera(String subDir) {
+    public static String getExternalVideo(String subDir) {
         String result;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + File.separator + "Camera");
