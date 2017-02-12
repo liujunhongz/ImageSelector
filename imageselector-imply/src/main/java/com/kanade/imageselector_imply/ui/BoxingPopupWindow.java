@@ -6,8 +6,10 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
@@ -15,7 +17,6 @@ import android.widget.PopupWindow;
 import com.kanade.imageselector_imply.R;
 import com.kanade.imageselector_imply.adapter.BoxingAlbumAdapter;
 import com.kanade.imageselector_imply.view.SpacesItemDecoration;
-
 
 public class BoxingPopupWindow extends PopupWindow {
     private RecyclerView recyclerView;
@@ -83,7 +84,14 @@ public class BoxingPopupWindow extends PopupWindow {
     }
 
     public void show() {
-        showAsDropDown(anchorView, 0, 0);
+        if (Build.VERSION.SDK_INT < 24) {
+            showAsDropDown(anchorView, 0, 0);
+        } else {
+            int[] location = new int[2];
+            anchorView.getLocationOnScreen(location);
+            int y = location[1];
+            showAtLocation(anchorView, Gravity.NO_GRAVITY, 0, y + anchorView.getHeight());
+        }
         AnimatorSet set = new AnimatorSet();
         ObjectAnimator alpha1 = ObjectAnimator.ofFloat(recyclerView, "alpha", 0, 1);
         ObjectAnimator alpha2 = ObjectAnimator.ofFloat(shadow, "alpha", 0, 1);
