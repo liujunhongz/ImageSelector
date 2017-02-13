@@ -1,6 +1,6 @@
 # ImageSelector
 
-![ImageSelector](http://shields.hust.cc/ImageSelector-0.2.3-blue.svg)
+![ImageSelector](http://shields.hust.cc/ImageSelector-0.2.6-blue.svg)
 
 该项目修改自[bilibili-boxing](https://github.com/Bilibili/boxing)(其实是给自己的项目用而作的修改)
 
@@ -16,9 +16,15 @@
 
 ```groovy
 // 核心库
-compile 'com.kanade:imageselector-core:0.2.3'
+compile 'com.kanade:imageselector-core:0.2.6'
 
 // 带UI实现
-compile 'com.kanade:imageselector-imply:0.2.3'
+compile 'com.kanade:imageselector-imply:0.2.6'
 ```
 
+
+
+> 更新说明：
+>
+> 1. 修复项目界面背景为null时出现的残影问题
+> 2. 修复7.0下拉框弹出位置问题
