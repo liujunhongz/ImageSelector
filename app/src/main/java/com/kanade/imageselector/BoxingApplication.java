@@ -20,6 +20,7 @@ package com.kanade.imageselector;
 import android.app.Application;
 
 import com.kanade.imageselector.impl.BoxingFrescoLoader;
+import com.kanade.imageselector.impl.BoxingGlideLoader;
 import com.kanade.imageselector.impl.BoxingUcrop;
 import com.kanade.imageselector_core.BoxingCrop;
 import com.kanade.imageselector_core.BoxingMediaLoader;
@@ -36,7 +37,7 @@ public class BoxingApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        IBoxingMediaLoader loader = new BoxingFrescoLoader(this);
+        IBoxingMediaLoader loader = new BoxingGlideLoader();
         BoxingMediaLoader.getInstance().init(loader);
         BoxingCrop.getInstance().init(new BoxingUcrop());
     }

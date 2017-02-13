@@ -27,7 +27,7 @@ import com.kanade.imageselector_core.model.BoxingBuilderConfig;
  * @author ChenSL
  */
 public class BoxingLog {
-    private static final String TAG = "com.kanade.imageselector_core";
+    private static final String TAG = "imageselector_core";
 
     public static void d(String log) {
         if (BoxingBuilderConfig.DEBUG && !BoxingBuilderConfig.TESTING) {
